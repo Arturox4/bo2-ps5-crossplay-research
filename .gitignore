@@ -1,0 +1,8 @@
+# Local captures and logs (contain LAN addresses, session keys, account IDs)
+*.pcap
+*.pcapng
+*.jsonl
+*_out*.txt
+tools/host_payloads.txt
+__pycache__/
+*.pyc
