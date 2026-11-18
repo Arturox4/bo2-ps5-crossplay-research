@@ -52,7 +52,7 @@ Decrypted PS5 payload: `8-byte nonce | "joinParty\0" | 31 08 00 00 (=2097) | acc
 - About 20 reply variants were tried (encrypted bare `partyaccept` mirroring `joinParty`, raw OOB, different headers). The PS5 never sent anything but `joinParty`; it kept retrying and re-associating every 5–16 s.
 - The reply format the PS5 expects can't be derived from the PC binary. It needs live trial and error with a new idea, or access to the PS5 code.
 
-Even if networking worked, PS5 Zombies lobbies cap at 4 players.
+Even if networking worked, nobody knows whether the PC and PS5 builds share the same in-game state format.
 
 ## Tools (`tools/`)
 
@@ -83,15 +83,17 @@ Python 3 + [`cryptography`](https://pypi.org/project/cryptography/). Captures us
 - Run the scripts from inside `tools/` so they can import each other.
 - The PS5 only sends LAN traffic at specific moments (opening the server browser, joining), so every test has to be timed with what you do on the console.
 
-## Playing 8-player Zombies today
+## Contributing
 
-Everyone on PC with [Plutonium](https://plutonium.pw) (T6) in LAN mode; PS5 controllers work on PC over USB/Bluetooth. Raise `sv_maxclients` / `party_maxplayers` to 8 in a custom game, or use the T6 QoL modpack (host only).
+Ideas, captures and fixes are welcome, especially from anyone who can see the PS5 side (a different console firmware, a dump of the PS5 port's party code, or a known `partyaccept` format).
+
+- Open an **issue** for findings, questions or test results.
+- Open a **pull request** for code or doc changes.
+- Don't commit raw captures or logs that contain your IP addresses, account IDs or session keys. Sanitize them first, the way `tools/host_payloads.example.txt` is.
 
 ## References
 
 - Plutonium forum — *BO2 PS5 LAN discovery protocol research* (topic 45705)
-- Plutonium forum — *How to have more people in zombies* (topic 41646)
-- Plutonium forum — *T6 ZM QoL Modpack* (topic 46019)
 
 ## Disclaimer
 

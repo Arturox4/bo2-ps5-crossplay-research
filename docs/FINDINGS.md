@@ -1,24 +1,19 @@
 # Findings: BO2 LAN crossplay between PC and PS5
 
 Tests ran on 16–17 November 2026.
-Original goal: play Zombies (Origins, survival) with 8 players across PC and PS5 over LAN.
+Goal: LAN crossplay between the PC version and the PS5 port.
 
 ## 1. Conclusion
 
 Crossplay was not achieved. PC and PS5 find each other on the LAN, complete the full Demonware DTLS handshake in both directions, and the PS5's encrypted lobby data can be decrypted. The PS5 never accepts the lobby reply (`partyaccept`) in any form we tried, and the format it expects can't be derived from the PC binary.
 
-Two limits remain even if networking worked:
-
-- PS5 Zombies lobbies cap at 4 players.
-- Nobody knows whether the PC and PS5 game engines use the same in-game state format (protocol 2097 vs. whatever Plutonium uses).
-
-What works today: 8 players in Origins with everyone on PC using Plutonium in LAN mode.
+Even if networking worked, nobody knows whether the PC and PS5 game engines use the same in-game state format (protocol 2097 vs. whatever Plutonium uses).
 
 ## 2. Context
 
 - BO1 and BO2 came out digitally for PS4 and PS5 on 9 July 2026. They are direct ports: no remaster, no DLC.
 - Official crossplay is PS4 ↔ PS5 only. PC and Xbox are separate.
-- Plutonium (T6) is PC-only and allows up to 8 players in Zombies.
+- Plutonium (T6) is PC-only.
 - No public project connects the PS5 port with PC.
 - The test PS5 runs firmware 14.22: no jailbreak is available.
 
@@ -204,15 +199,3 @@ The PS5 never sent anything but `joinParty` and kept retrying and re-associating
 - A silent Wireshark install doesn't include Npcap; it had to be installed separately.
 - A wrong capture filter dropped the relevant traffic in one test.
 - The PS5 only sends LAN traffic at specific moments, so every test has to be coordinated with what you do on the console.
-
-## 8. Playing 8-player Zombies today (all on PC)
-
-- Each player needs a PC with BO2 and Plutonium. The game is light, so modest laptops work.
-- PS5 controllers work on PC over USB or Bluetooth.
-- LAN mode without an account, from the Plutonium folder:
-
-  ```
-  bin\plutonium-bootstrapper-win32.exe t6zm "<BO2 path>" -lan +name YourName
-  ```
-
-- For 8 players: in a custom game raise `sv_maxclients` and `party_maxplayers` to 8 from the console, or use the T6-QoL modpack (only the host installs it). Not tested in these sessions.
